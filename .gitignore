@@ -36,3 +36,4 @@ __pycache__/
 # OS files
 .DS_Store
 Thumbs.db
+data/counts/gene_counts.txt
