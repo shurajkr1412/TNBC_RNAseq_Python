@@ -1,0 +1,52 @@
+============================================
+TNBC RNA-seq DIFFERENTIAL EXPRESSION SUMMARY
+============================================
+
+PROJECT: TNBC vs Paracancerous Breast Tissue
+
+1. OVERALL RESULTS
+--------------------------------------------
+Total genes analyzed: 47726
+Significant DEGs: 3559
+Upregulated genes: 1878
+Downregulated genes: 1681
+
+2. TOP 10 UPREGULATED GENES
+--------------------------------------------
+IVL	log2FC=9.3301
+IBSP	log2FC=8.1468
+CST1	log2FC=7.9489
+TMEM151A	log2FC=7.6020
+MMP1	log2FC=7.4607
+CLEC6A	log2FC=7.4554
+MMP13	log2FC=7.4031
+COPDA1	log2FC=7.2562
+IL21-AS1	log2FC=7.2189
+LOC102723635	log2FC=7.1883
+
+3. TOP 10 DOWNREGULATED GENES
+--------------------------------------------
+nan	log2FC=-8.9361
+LINC01087	log2FC=-8.7804
+ARHGAP36	log2FC=-8.3847
+CT62	log2FC=-8.2681
+POTEKP	log2FC=-8.2277
+SERPINA6	log2FC=-7.7044
+ELOVL2-AS1	log2FC=-7.5429
+nan	log2FC=-7.4885
+LOC107986528	log2FC=-7.2653
+MARCHF11	log2FC=-7.1891
+
+4. ANALYSIS OUTPUTS
+--------------------------------------------
+Differential expression results: differential_expression_results.csv
+Significant DEGs: significant_DEGs.csv
+PCA coordinates: PCA_coordinates.csv
+Annotated DEGs: final_annotated_DEGs.csv
+Annotated significant DEGs: final_significant_DEGs_annotated.csv
+PCA plot: PCA_plot.png
+Volcano plot: Volcano_plot.png
+MA plot: MA_plot.png
+Heatmap: Heatmap_Top50_DEGs.png
+GO enrichment results: GO_enrichment/
+KEGG enrichment results: KEGG_enrichment/
