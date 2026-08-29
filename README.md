@@ -2,150 +2,100 @@
 
 ## Project Overview
 
-This project presents a computational RNA-seq analysis of Triple-Negative Breast Cancer (TNBC) compared with paracancerous breast tissue.
+This project performs a Python-based RNA-seq differential expression analysis of **Triple-Negative Breast Cancer (TNBC)** compared with **paracancerous breast tissue**.
 
-The analysis was performed using a Python-based RNA-seq workflow, including PyDESeq2 for differential expression analysis, PCA for sample-level variation, and GO and KEGG enrichment analyses for biological interpretation.
+The analysis starts from a gene-level count matrix and metadata, followed by data preprocessing, differential expression analysis, visualization, functional enrichment, and annotation of significant genes.
+
+The project demonstrates a reproducible computational biology workflow using Python and commonly used bioinformatics analysis approaches.
 
 ---
 
 ## Research Objective
 
-The main objective of this project is to identify genes that are differentially expressed between TNBC and paracancerous breast tissue samples and to characterize their biological functions and associated pathways.
+The primary objective of this project is to identify genes that are differentially expressed between:
 
-### Specific Objectives
+- **TNBC tissue**
+- **Paracancerous breast tissue**
 
-- Process and organize RNA-seq gene count data.
-- Prepare sample metadata for differential expression analysis.
-- Identify differentially expressed genes.
-- Determine significantly upregulated and downregulated genes.
-- Perform principal component analysis (PCA).
-- Generate MA, volcano, and heatmap visualizations.
-- Perform Gene Ontology (GO) enrichment analysis.
-- Perform KEGG pathway enrichment analysis.
-- Annotate significant DEGs with gene symbols.
-- Generate tables and visualizations for downstream interpretation.
+The identified differentially expressed genes (DEGs) are further investigated to understand their associated biological functions and pathways.
 
 ---
 
-## Dataset
-
-The dataset used for this project is:
-
-**GSE267442**
-
-The analysis contains:
-
-- 4 TNBC samples
-- 4 Paracancerous breast tissue samples
-- Human RNA-seq data
-
-Gene-level read counts were used as the input for downstream analysis.
-
----
 ## Analysis Workflow
 
-The overall workflow followed in this project was:
-
 ```text
-RNA-seq Gene Count Data
-          |
-          v
-Count Matrix Preparation
-          |
-          v
-Sample Metadata Preparation
-          |
-          +----------------------+
-          |                      |
-          v                      v
-Differential Expression     PCA Analysis
-Analysis                         |
-          |                      v
-          v                 PCA Plot
-Significant DEGs
-          |
-          +----------------------+----------------------+
-          |                      |                      |
-          v                      v                      v
-     Volcano Plot             MA Plot              Heatmap
-          |
-          v
-Gene Annotation
-          |
-          v
-Annotated DEGs
-          |
-          +----------------------+
-          |                      |
-          v                      v
-   GO Enrichment          KEGG Enrichment
-          |                      |
-          v                      v
-Functional Interpretation   Pathway Interpretation
+Gene Count Matrix
+        |
+        v
+Data Loading & Quality Checks
+        |
+        v
+Metadata Preparation
+        |
+        v
+Differential Expression Analysis
+        |
+        v
+DEG Categorization
+        |
+        +------------------+
+        |                  |
+        v                  v
+       PCA          Volcano / MA Plot
+        |                  |
+        +--------+---------+
+                 |
+                 v
+          Top DEGs / Heatmap
+                 |
+                 v
+        Functional Enrichment
+          /             \
+         v               v
+       GO               KEGG
+    BP / MF / CC
+         |
+         v
+   DEG Annotation
+         |
+         v
+   Final Project Summary
 
+ ## Project Structure
 
-
-
-## Tools and Technologies
-
-### Programming Language
-- Python
-
-### Python Libraries
-- pandas
-- NumPy
-- SciPy
-- matplotlib
-- seaborn
-- scikit-learn
-- Biopython
-- gseapy
-- PyDESeq2
-
-### Bioinformatics Analysis
-- RNA-seq gene count analysis
-- Differential expression analysis
-- Principal Component Analysis (PCA)
-- Gene Ontology (GO) enrichment
-- KEGG pathway enrichment
-- Gene annotation
-
-### Visualization
-- PCA plot
-- Volcano plot
-- MA plot
-- Heatmap
-- GO enrichment plots
-- KEGG pathway enrichment plot
-
----
-
-## Project Structure
-
-```text
-TNBC_RNAseq_Python/
+   TNBC_RNAseq_Python/
 │
 ├── data/
-│   ├── bam/
 │   ├── counts/
-│   ├── fastq/
+│   │   └── gene_counts.txt        # Large raw count file (not tracked by Git)
+│   │
 │   └── metadata/
+│       └── metadata.csv
 │
 ├── results/
 │   ├── GO_enrichment/
+│   │   ├── GO_BP/
+│   │   ├── GO_CC/
+│   │   ├── GO_MF/
+│   │   ├── GO_BP_results.csv
+│   │   ├── GO_CC_results.csv
+│   │   ├── GO_MF_results.csv
+│   │   └── DEG_gene_symbols.csv
+│   │
 │   ├── KEGG_enrichment/
-│   ├── clean_count_matrix.csv
-│   ├── differential_expression_results.csv
-│   ├── significant_DEGs.csv
-|   ├── differential_expression_categorized.csv
-│   ├── Top50_DEGs.csv
-│   ├── PCA_coordinates.csv
+│   │   ├── KEGG_results.csv
+│   │   └── KEGG_top10.png
+│   │
 │   ├── PCA_plot.png
 │   ├── MA_plot.png
 │   ├── Volcano_plot.png
 │   ├── Heatmap_Top50_DEGs.png
+│   ├── PCA_coordinates.csv
+│   ├── Top50_DEGs.csv
+│   ├── significant_DEGs.csv
+│   ├── differential_expression_results.csv
+│   ├── differential_expression_categorized.csv
 │   ├── final_annotated_DEGs.csv
-│   ├── final_significant_DEGs_annotated.csv
 │   └── final_project_summary.txt
 │
 ├── scripts/
@@ -161,208 +111,168 @@ TNBC_RNAseq_Python/
 │   ├── 10_annotate_degs.py
 │   └── 11_final_summary.py
 │
+├── .gitignore
 └── README.md
 
-
-
-
-
-
-
-
-
-
 ---
 
-## Results
+## Key Analysis Steps
 
-### Differential Expression Analysis
+### 1. Count Matrix Preparation
 
-A total of **47,726 genes** were analyzed for differential expression between TNBC and paracancerous breast tissue samples.
+The project uses a gene-level count matrix as the starting point for RNA-seq differential expression analysis.
 
-Using an adjusted p-value (padj) < 0.05 and an absolute log2 fold change (|log2FC|) ≥ 1, **3,559 genes** were identified as significant differentially expressed genes (DEGs).
+The large count file is intentionally excluded from the GitHub repository because GitHub has a 100 MB file size limit.
 
-Among the significant DEGs:
+The `.gitignore` file prevents large sequencing and count files from being committed accidentally.
 
-- **1,878 genes were upregulated**
-- **1,681 genes were downregulated**
+### 2. Metadata Preparation
 
-The complete differential expression results are provided in:
+Sample metadata are prepared to define the experimental groups:
 
-`results/differential_expression_results.csv`
+- **TNBC**
+- **Paracancerous breast tissue**
 
-The significant DEGs are provided in:
+The metadata are used to associate each sample with its corresponding biological condition.
 
-`results/significant_DEGs.csv`
+### 3. Differential Expression Analysis
 
----
+Differential expression analysis is performed to identify genes whose expression differs between the two experimental groups.
 
-### Principal Component Analysis
+The analysis produces:
 
-Principal Component Analysis (PCA) was performed to evaluate sample-level variation and visualize the separation between TNBC and paracancerous samples.
+- Complete differential expression results
+- Significant DEGs
+- Categorized DEGs
+- Annotated DEGs
 
-The first principal component (PC1) explained **44.10%** of the total variance, while the second principal component (PC2) explained **26.07%**.
+### 4. Principal Component Analysis
 
-The PCA plot demonstrated separation between the TNBC and paracancerous sample groups.
+Principal Component Analysis (PCA) is used to visualize the overall structure of the samples and assess separation between the experimental groups.
 
 **Output:**
 
 `results/PCA_plot.png`
 
----
+### 5. Volcano Plot and MA Plot
 
-### Differential Expression Visualization
+Volcano and MA plots are generated to visualize differential expression results.
 
-Several visualization methods were generated to evaluate the differential expression results:
-The volcano plot and MA plot were generated from the differential expression results, while the heatmap shows expression patterns for the top 50 DEGs.
+**Outputs:**
 
-- **Volcano plot** – visualizes statistical significance and magnitude of gene expression changes.
-- **MA plot** – displays the relationship between average gene expression and log2 fold change.
-- **Heatmap** – visualizes expression patterns of the top differentially expressed genes.
+- `results/Volcano_plot.png`
+- `results/MA_plot.png`
 
-The corresponding files are available in the `results/` directory.
+### 6. Heatmap
 
----
+A heatmap of the top 50 differentially expressed genes is generated to visualize expression patterns across samples.
 
-### Gene Ontology Enrichment Analysis
+**Output:**
 
-Gene Ontology (GO) enrichment analysis was performed to investigate the biological functions associated with the identified significant DEGs.
+`results/Heatmap_Top50_DEGs.png`
 
-Enrichment analysis was performed for:
+### 7. Gene Ontology Enrichment
 
-- Biological Process (BP)
-- Molecular Function (MF)
-- Cellular Component (CC)
+Significant DEGs are investigated using Gene Ontology (GO) enrichment analysis.
 
-The GO enrichment results and plots are available under:
+Three GO categories are considered:
+
+- **Biological Process (BP)**
+- **Molecular Function (MF)**
+- **Cellular Component (CC)**
+
+The enrichment results and visualization files are available under:
 
 `results/GO_enrichment/`
 
----
+### 8. KEGG Pathway Enrichment
 
-### KEGG Pathway Enrichment Analysis
+KEGG pathway enrichment is performed to identify biological pathways associated with the identified DEGs.
 
-KEGG pathway enrichment analysis was performed to identify biological pathways associated with the significant DEGs.
-
-The pathway enrichment results and visualization are available under:
+**Output:**
 
 `results/KEGG_enrichment/`
 
----
+### 9. DEG Annotation
 
-### Gene Annotation
-
-Significant DEGs were annotated with gene symbols to facilitate biological interpretation.
-
-The final annotated datasets are:
-
-- `results/final_annotated_DEGs.csv`
-- `results/final_significant_DEGs_annotated.csv`
+Significant genes are further annotated to obtain gene symbols and generate final annotated DEG tables.
 
 ---
 
-## Conclusion
+## Results
 
-This project established a Python-based RNA-seq differential expression workflow for comparing Triple-Negative Breast Cancer (TNBC) with paracancerous breast tissue.
+The repository contains the main outputs generated during the analysis, including:
 
-The analysis identified **3,559 significant differentially expressed genes (DEGs)**, including **1,878 upregulated genes** and **1,681 downregulated genes**.
+- PCA visualization
+- Volcano plot
+- MA plot
+- Top-50 DEG heatmap
+- Differential expression tables
+- GO enrichment results
+- KEGG enrichment results
+- Annotated DEG tables
+- Final project summary
 
-Principal Component Analysis (PCA) demonstrated separation between the TNBC and paracancerous sample groups, indicating differences in their overall gene expression profiles.
-
-Volcano plots, MA plots, and heatmap visualization were generated to examine the expression patterns of the identified DEGs. Gene Ontology (GO) enrichment analysis was performed for Biological Process, Molecular Function, and Cellular Component, while KEGG pathway enrichment was used to investigate pathways associated with the significant DEGs.
-
-The final annotated DEG tables provide gene-level information for further biological interpretation.
-
-Overall, the project demonstrates a reproducible Python-based workflow for RNA-seq differential expression analysis, visualization, functional enrichment, pathway analysis, and DEG annotation.
-
----
-
-## Future Scope
-
-The analysis can be further extended by:
-
-- Performing additional pathway and network analysis.
-- Investigating key hub genes among the significant DEGs.
-- Comparing identified genes with known TNBC-associated biomarkers.
-- Performing protein-protein interaction (PPI) network analysis.
-- Integrating additional transcriptomic or multi-omics datasets.
-- Validating candidate genes using independent datasets.
-
-
+These outputs can be used to interpret differences in gene expression between TNBC and paracancerous breast tissue.
 
 ---
-## How to Run the Project
 
-```bash
-git clone <your-github-repository-url>
-cd TNBC_RNAseq_Python
+## Technologies & Tools
 
-python -m venv .venv
+### Programming
 
-.venv\Scripts\activate
+- Python
+- Pandas
+- NumPy
+- Matplotlib
+- Seaborn
 
-pip install pandas numpy scipy matplotlib seaborn scikit-learn biopython gseapy pydeseq2 anndata statsmodels
+### Bioinformatics & Statistical Analysis
 
-python scripts/01_load_counts.py
-python scripts/02_prepare_metadata.py
-python scripts/03_differential_expression.py
-python scripts/04_pca.py
-python scripts/05_volcano_ma.py
-python scripts/06_heatmap.py
-python scripts/07_go_enrichment.py
-python scripts/08_go_mf_cc.py
-python scripts/09_kegg_enrichment.py
-python scripts/10_annotate_degs.py
-python scripts/11_final_summary.py
+- RNA-seq differential expression analysis
+- Principal Component Analysis (PCA)
+- Gene Ontology enrichment
+- KEGG pathway enrichment
+- DEG annotation
 
-The generated tables and visualizations will be stored in the `results/` directory.
+### Development Environment
+
+- Visual Studio Code
+- Python virtual environment
+- Git
+- GitHub
+
 ---
 
 ## Reproducibility
 
-All analysis scripts used to generate the results are included in the `scripts/` directory.
+The analysis has been organized into sequential Python scripts.
 
-The project structure separates input data, metadata, analysis scripts, and generated results to make the workflow easier to understand and reproduce.
+The scripts are numbered according to the analysis workflow:
 
----
-
-## Requirements
-
-The project was developed using Python and the following libraries:
-
-- Python 3.13
-- pandas
-- NumPy
-- SciPy
-- Matplotlib
-- Seaborn
-- scikit-learn
-- gseapy
-- Anndata
-- Statsmodels
-- PyDESeq2
-
-The analysis was performed in a Python virtual environment.
+```text
+01 → Load count data
+02 → Prepare metadata
+03 → Differential expression analysis
+04 → PCA
+05 → Volcano and MA plots
+06 → Heatmap
+07 → GO Biological Process enrichment
+08 → GO Molecular Function & Cellular Component enrichment
+09 → KEGG enrichment
+10 → DEG annotation
+11 → Final project summary
 
 ---
 
-## Project Status
-The complete Python-based RNA-seq differential expression workflow has been implemented and executed successfully on the GSE267442 dataset.
+## Author
 
-The final analysis includes:
+**Suraj Kumar Chanda**
 
-- Differential expression analysis
-- PCA analysis
-- Volcano plot
-- MA plot
-- Top-DEG heatmap
-- GO Biological Process enrichment
-- GO Molecular Function enrichment
-- GO Cellular Component enrichment
-- KEGG pathway enrichment
-- DEG annotation
-- Final project summary
+GitHub: [shurajkr1412](https://github.com/shurajkr1412)
 
+---
 
-## License
-This project is intended for academic and educational purposes.
+## Disclaimer
+
+This project is intended for educational and research portfolio purposes and demonstrates an RNA-seq data analysis workflow using the available project dataset.
