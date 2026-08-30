@@ -38,6 +38,10 @@ else:
     raise ValueError("log2FoldChange column not found.")
 
 
+# ==============================
+# UPREGULATED / DOWNREGULATED
+# ==============================
+
 upregulated = sig_deg[sig_deg[fc_column] > 0]
 downregulated = sig_deg[sig_deg[fc_column] < 0]
 
@@ -79,6 +83,11 @@ with open(summary_file, "w", encoding="utf-8") as f:
 
     f.write("PROJECT: TNBC vs Paracancerous Breast Tissue\n\n")
 
+
+    # ==============================
+    # 1. OVERALL RESULTS
+    # ==============================
+
     f.write("1. OVERALL RESULTS\n")
     f.write("--------------------------------------------\n")
     f.write(f"Total genes analyzed: {total_genes}\n")
@@ -86,15 +95,17 @@ with open(summary_file, "w", encoding="utf-8") as f:
     f.write(f"Upregulated genes: {len(upregulated)}\n")
     f.write(f"Downregulated genes: {len(downregulated)}\n\n")
 
+
+    # ==============================
+    # 2. TOP 10 UPREGULATED GENES
+    # ==============================
+
     f.write("2. TOP 10 UPREGULATED GENES\n")
     f.write("--------------------------------------------\n")
 
     for _, row in top_up.iterrows():
 
-        gene_name = row.get(
-            "Gene_Symbol",
-            row.get("gene_symbol", row.get("symbol", row.get("Geneid", "Unknown")))
-        )
+        gene_name = row["symbol"]
 
         f.write(
             f"{gene_name}\t"
@@ -102,16 +113,18 @@ with open(summary_file, "w", encoding="utf-8") as f:
         )
 
     f.write("\n")
+
+
+    # ==============================
+    # 3. TOP 10 DOWNREGULATED GENES
+    # ==============================
 
     f.write("3. TOP 10 DOWNREGULATED GENES\n")
     f.write("--------------------------------------------\n")
 
     for _, row in top_down.iterrows():
 
-        gene_name = row.get(
-            "Gene_Symbol",
-            row.get("gene_symbol", row.get("symbol", row.get("Geneid", "Unknown")))
-        )
+        gene_name = row["symbol"]
 
         f.write(
             f"{gene_name}\t"
@@ -119,6 +132,11 @@ with open(summary_file, "w", encoding="utf-8") as f:
         )
 
     f.write("\n")
+
+
+    # ==============================
+    # 4. ANALYSIS OUTPUTS
+    # ==============================
 
     f.write("4. ANALYSIS OUTPUTS\n")
     f.write("--------------------------------------------\n")
@@ -148,5 +166,5 @@ print(f"Significant DEGs: {significant_degs}")
 print(f"Upregulated genes: {len(upregulated)}")
 print(f"Downregulated genes: {len(downregulated)}")
 
-print(f"\nFinal summary saved to:")
-print(f"{summary_file}")
+print("\nFinal summary saved to:")
+print(summary_file)
