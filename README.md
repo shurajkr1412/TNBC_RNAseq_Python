@@ -199,21 +199,61 @@ Significant genes are further annotated to obtain gene symbols and generate fina
 
 ---
 
-## Results
+---
 
-The repository contains the main outputs generated during the analysis, including:
+## Results & Visualizations
 
-- PCA visualization
-- Volcano plot
-- MA plot
-- Top-50 DEG heatmap
-- Differential expression tables
-- GO enrichment results
-- KEGG enrichment results
-- Annotated DEG tables
-- Final project summary
+The analysis generated multiple visualizations to assess sample structure, differential expression, and functional enrichment.
 
-These outputs can be used to interpret differences in gene expression between TNBC and paracancerous breast tissue.
+### Principal Component Analysis
+
+PCA was used to visualize sample-level variation and assess separation between TNBC and paracancerous breast tissue samples.
+
+![PCA Plot](results/PCA_plot.png)
+
+### Differential Expression
+
+The Volcano Plot and MA Plot summarize the differential expression results.
+
+#### Volcano Plot
+
+![Volcano Plot](results/Volcano_plot.png)
+
+#### MA Plot
+
+![MA Plot](results/MA_plot.png)
+
+### Top Differentially Expressed Genes
+
+A heatmap of the top 50 differentially expressed genes was generated to visualize expression patterns across samples.
+
+![Top 50 DEGs Heatmap](results/Heatmap_Top50_DEGs.png)
+
+### Gene Ontology Enrichment
+
+GO enrichment analysis was performed across:
+
+- Biological Process (BP)
+- Molecular Function (MF)
+- Cellular Component (CC)
+
+#### Biological Process
+
+![GO Biological Process](results/GO_enrichment/GO_BP_top10.png)
+
+#### Molecular Function
+
+![GO Molecular Function](results/GO_enrichment/GO_MF_top10.png)
+
+#### Cellular Component
+
+![GO Cellular Component](results/GO_enrichment/GO_CC_top10.png)
+
+### KEGG Pathway Enrichment
+
+KEGG enrichment analysis was performed to identify pathways associated with the identified DEGs.
+
+![KEGG Enrichment](results/KEGG_enrichment/KEGG_top10.png)
 
 ---
 
