@@ -217,6 +217,8 @@ These outputs can be used to interpret differences in gene expression between TN
 
 ---
 
+---
+
 ## Technologies & Tools
 
 ### Programming
@@ -231,7 +233,7 @@ These outputs can be used to interpret differences in gene expression between TN
 
 - RNA-seq differential expression analysis
 - Principal Component Analysis (PCA)
-- Gene Ontology enrichment
+- Gene Ontology (GO) enrichment
 - KEGG pathway enrichment
 - DEG annotation
 
@@ -246,9 +248,7 @@ These outputs can be used to interpret differences in gene expression between TN
 
 ## Reproducibility
 
-The analysis has been organized into sequential Python scripts.
-
-The scripts are numbered according to the analysis workflow:
+The analysis has been organized into sequential Python scripts following a structured workflow.
 
 ```text
 01 → Load count data
@@ -276,3 +276,4 @@ GitHub: [shurajkr1412](https://github.com/shurajkr1412)
 ## Disclaimer
 
 This project is intended for educational and research portfolio purposes and demonstrates an RNA-seq data analysis workflow using the available project dataset.
+
