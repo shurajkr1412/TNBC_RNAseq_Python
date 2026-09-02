@@ -124,7 +124,11 @@ with open(summary_file, "w", encoding="utf-8") as f:
 
     for _, row in top_down.iterrows():
 
-        gene_name = row["symbol"]
+        gene_name = (
+            row["symbol"]
+            if pd.notna(row["symbol"]) and str(row["symbol"]).strip()
+            else row["ensembl_id"]
+        )
 
         f.write(
             f"{gene_name}\t"
