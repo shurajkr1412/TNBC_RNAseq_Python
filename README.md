@@ -25,49 +25,81 @@ The identified differentially expressed genes (DEGs) are further investigated to
 
 ```text
 Gene Count Matrix
+
         |
+
         v
+
 Data Loading & Quality Checks
+
         |
+
         v
+
 Metadata Preparation
+
         |
+
         v
+
 Differential Expression Analysis
+
         |
+
         v
+
 DEG Categorization
+
         |
+
         +------------------+
         |                  |
         v                  v
+
        PCA          Volcano / MA Plot
+
         |                  |
         +--------+---------+
                  |
                  v
+
           Top DEGs / Heatmap
+
                  |
+
                  v
+
         Functional Enrichment
-          /             \
-         v               v
-       GO               KEGG
-    BP / MF / CC
-         |
-         v
-   DEG Annotation
-         |
-         v
+
+           /           \
+
+          v             v
+
+         GO            KEGG
+
+     BP / MF / CC
+
+          |
+
+          v
+
+     DEG Annotation
+
+          |
+
+          v
+
    Final Project Summary
+```
 
- ## Project Structure
+## Project Structure
 
-   TNBC_RNAseq_Python/
+```text
+TNBC_RNAseq_Python/
 │
 ├── data/
 │   ├── counts/
-│   │   └── gene_counts.txt        # Large raw count file (not tracked by Git)
+│   │   └── gene_counts.txt
 │   │
 │   └── metadata/
 │       └── metadata.csv
@@ -96,6 +128,7 @@ DEG Categorization
 │   ├── differential_expression_results.csv
 │   ├── differential_expression_categorized.csv
 │   ├── final_annotated_DEGs.csv
+│   ├── final_significant_DEGs_annotated.csv
 │   └── final_project_summary.txt
 │
 ├── scripts/
@@ -112,32 +145,40 @@ DEG Categorization
 │   └── 11_final_summary.py
 │
 ├── .gitignore
+├── requirements.txt
 └── README.md
+```
+
+The large raw count file is excluded from version control using `.gitignore`.
 
 ---
 
-## Key Analysis Steps
+## Analysis Steps
 
 ### 1. Count Matrix Preparation
 
-The project uses a gene-level count matrix as the starting point for RNA-seq differential expression analysis.
+The analysis begins with a gene-level RNA-seq count matrix.
 
-The large count file is intentionally excluded from the GitHub repository because GitHub has a 100 MB file size limit.
+The count data are loaded using Python and Pandas and prepared for downstream differential expression analysis.
 
-The `.gitignore` file prevents large sequencing and count files from being committed accidentally.
+Large raw sequencing/count files are excluded from Git version control using `.gitignore`.
+
+---
 
 ### 2. Metadata Preparation
 
-Sample metadata are prepared to define the experimental groups:
+Sample metadata are prepared to define the experimental conditions:
 
 - **TNBC**
 - **Paracancerous breast tissue**
 
 The metadata are used to associate each sample with its corresponding biological condition.
 
+---
+
 ### 3. Differential Expression Analysis
 
-Differential expression analysis is performed to identify genes whose expression differs between the two experimental groups.
+Differential expression analysis is performed to identify genes whose expression differs between TNBC and paracancerous breast tissue.
 
 The analysis produces:
 
@@ -146,13 +187,17 @@ The analysis produces:
 - Categorized DEGs
 - Annotated DEGs
 
+---
+
 ### 4. Principal Component Analysis
 
-Principal Component Analysis (PCA) is used to visualize the overall structure of the samples and assess separation between the experimental groups.
+Principal Component Analysis (PCA) is used to visualize the overall structure of the samples and assess separation between TNBC and paracancerous breast tissue samples.
 
 **Output:**
 
 `results/PCA_plot.png`
+
+---
 
 ### 5. Volcano Plot and MA Plot
 
@@ -163,6 +208,8 @@ Volcano and MA plots are generated to visualize differential expression results.
 - `results/Volcano_plot.png`
 - `results/MA_plot.png`
 
+---
+
 ### 6. Heatmap
 
 A heatmap of the top 50 differentially expressed genes is generated to visualize expression patterns across samples.
@@ -170,6 +217,8 @@ A heatmap of the top 50 differentially expressed genes is generated to visualize
 **Output:**
 
 `results/Heatmap_Top50_DEGs.png`
+
+---
 
 ### 7. Gene Ontology Enrichment
 
@@ -185,6 +234,8 @@ The enrichment results and visualization files are available under:
 
 `results/GO_enrichment/`
 
+---
+
 ### 8. KEGG Pathway Enrichment
 
 KEGG pathway enrichment is performed to identify biological pathways associated with the identified DEGs.
@@ -193,11 +244,52 @@ KEGG pathway enrichment is performed to identify biological pathways associated 
 
 `results/KEGG_enrichment/`
 
+---
+
 ### 9. DEG Annotation
 
 Significant genes are further annotated to obtain gene symbols and generate final annotated DEG tables.
 
 ---
+
+## Results
+
+The final differential expression analysis identified:
+
+- **47,726 genes analyzed**
+- **3,559 significant DEGs**
+- **1,878 upregulated genes**
+- **1,681 downregulated genes**
+
+### Top 10 Upregulated Genes
+
+| Gene | log2FC |
+|---|---:|
+| IVL | 9.3301 |
+| IBSP | 8.1468 |
+| CST1 | 7.9489 |
+| TMEM151A | 7.6020 |
+| MMP1 | 7.4607 |
+| CLEC6A | 7.4554 |
+| MMP13 | 7.4031 |
+| COPDA1 | 7.2562 |
+| IL21-AS1 | 7.2189 |
+| LOC102723635 | 7.1883 |
+
+### Top 10 Downregulated Genes
+
+| Gene | log2FC |
+|---|---:|
+| ENSG00000286208 | -8.9361 |
+| LINC01087 | -8.7804 |
+| ARHGAP36 | -8.3847 |
+| CT62 | -8.2681 |
+| POTEKP | -8.2277 |
+| SERPINA6 | -7.7044 |
+| ELOVL2-AS1 | -7.5429 |
+| ENSG00000301521 | -7.4885 |
+| LOC107986528 | -7.2653 |
+| MARCHF11 | -7.1891 |
 
 ---
 
@@ -233,9 +325,9 @@ A heatmap of the top 50 differentially expressed genes was generated to visualiz
 
 GO enrichment analysis was performed across:
 
-- Biological Process (BP)
-- Molecular Function (MF)
-- Cellular Component (CC)
+- **Biological Process (BP)**
+- **Molecular Function (MF)**
+- **Cellular Component (CC)**
 
 #### Biological Process
 
@@ -256,6 +348,54 @@ KEGG enrichment analysis was performed to identify pathways associated with the 
 ![KEGG Enrichment](results/KEGG_enrichment/KEGG_top10.png)
 
 ---
+
+## Analysis Outputs
+
+The following files are generated by the analysis.
+
+### Differential Expression
+
+- `results/differential_expression_results.csv`
+- `results/differential_expression_categorized.csv`
+- `results/significant_DEGs.csv`
+
+### Annotation
+
+- `results/final_annotated_DEGs.csv`
+- `results/final_significant_DEGs_annotated.csv`
+
+### PCA
+
+- `results/PCA_coordinates.csv`
+- `results/PCA_plot.png`
+
+### Differential Expression Visualization
+
+- `results/Volcano_plot.png`
+- `results/MA_plot.png`
+
+### Heatmap
+
+- `results/Top50_DEGs.csv`
+- `results/Heatmap_Top50_DEGs.png`
+
+### GO Enrichment
+
+- `results/GO_enrichment/GO_BP_results.csv`
+- `results/GO_enrichment/GO_CC_results.csv`
+- `results/GO_enrichment/GO_MF_results.csv`
+- `results/GO_enrichment/GO_BP_top10.png`
+- `results/GO_enrichment/GO_CC_top10.png`
+- `results/GO_enrichment/GO_MF_top10.png`
+
+### KEGG Enrichment
+
+- `results/KEGG_enrichment/KEGG_results.csv`
+- `results/KEGG_enrichment/KEGG_top10.png`
+
+### Final Summary
+
+- `results/final_project_summary.txt`
 
 ---
 
@@ -302,6 +442,28 @@ The analysis has been organized into sequential Python scripts following a struc
 09 → KEGG enrichment
 10 → DEG annotation
 11 → Final project summary
+```
+
+Each step produces outputs that are used by subsequent stages of the analysis.
+
+---
+
+## Project Significance
+
+This project demonstrates an end-to-end RNA-seq bioinformatics workflow, from gene-level count data through differential expression analysis and biological interpretation.
+
+The workflow integrates:
+
+- Data preprocessing
+- Experimental metadata handling
+- Differential expression analysis
+- Statistical visualization
+- Gene-level annotation
+- Gene Ontology enrichment
+- KEGG pathway analysis
+- Reproducible project organization
+
+The project provides practical experience with computational analysis of transcriptomic data and demonstrates how differential gene expression can be investigated in the context of TNBC biology.
 
 ---
 
@@ -309,11 +471,10 @@ The analysis has been organized into sequential Python scripts following a struc
 
 **Suraj Kumar Chanda**
 
-GitHub: [shurajkr1412](https://github.com/shurajkr1412)
+GitHub: **shurajkr1412**
 
 ---
 
 ## Disclaimer
 
 This project is intended for educational and research portfolio purposes and demonstrates an RNA-seq data analysis workflow using the available project dataset.
-
